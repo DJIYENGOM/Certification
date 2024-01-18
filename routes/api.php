@@ -38,5 +38,6 @@ Route::controller(ZoneController::class)->group(function () {
       
         Route::post('/create-guide', [Controller::class, 'createGuide']);
         Route::get('/listerGuide', [Controller::class, 'listerGuides']);
+        Route::delete('/delete-guide/{userId}', [Controller::class, 'deleteGuide']);
 
     //});

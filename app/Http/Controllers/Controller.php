@@ -40,4 +40,25 @@ class Controller extends BaseController
         return response()->json($guides);
     }
 
+
+    public function deleteGuide($userId)
+    {
+        // Vérifier si l'utilisateur authentifié a le rôle d'administrateur
+        if (auth()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Vous n\'avez pas les autorisations nécessaires pour supprimer un guide.'], 403);
+        }
+
+        // Vérifier si l'utilisateur avec l'ID spécifié existe et a le rôle de guide
+        $guide = User::where('id', $userId)->where('role', 'guide')->first();
+
+        if (!$guide) {
+            return response()->json(['message' => 'Guide non trouvé.'], 404);
+        }
+
+        // Supprimer le guide
+        $guide->delete();
+
+        return response()->json(['message' => 'Guide supprimé avec succès']);
+    }
+
 }
