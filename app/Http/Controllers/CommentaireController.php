@@ -29,7 +29,7 @@ class CommentaireController extends Controller
         $commentaire = Commentaire::findOrFail($commentaireId);
 
         // Vérifiez si l'utilisateur est autorisé à supprimer le commentaire (peut être un admin)
-        $this->authorize('delete', $commentaire);
+       // $this->authorize('delete', $commentaire);
 
         $commentaire->delete();
 
