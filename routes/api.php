@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ZoneController;
 
 Route::controller(AuthController::class)->group(function () {
@@ -24,3 +26,17 @@ Route::controller(ZoneController::class)->group(function () {
     Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
     Route::get('/listerCommentaires/{zoneId}', [CommentaireController::class, 'listerCommentaires']);
     Route::get('/compterCommentaires/{zoneId}', [CommentaireController::class, 'compterCommentaires']);
+
+    Route::post('/reservations', [ReservationController::class, 'faireReservation']);
+    Route::get('/reservations', [ReservationController::class, 'listerReservations']);
+    Route::put('/reservations/{reservationId}/annuler', [ReservationController::class, 'annulerReservation']);
+    Route::put('/reservations/{reservationId}/accepter', [ReservationController::class, 'accepterReservation']);
+    Route::put('/reservations/{reservationId}/refuser', [ReservationController::class, 'refuserReservation']);
+
+
+   // Route::middleware('auth')->group(function () {
+      
+        Route::post('/create-guide', [Controller::class, 'createGuide']);
+        Route::get('/listerGuide', [Controller::class, 'listerGuides']);
+
+    //});
