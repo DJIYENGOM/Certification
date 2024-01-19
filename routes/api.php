@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommentaireController;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ZoneController;
 
@@ -15,15 +14,11 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(ZoneController::class)->group(function () {
-    Route::post('ajoutZone', 'store');
     Route::get('listeZone', 'index');
     Route::get('detailZone/{zoneTouristique}', 'show');
-    Route::post('modifierZone/{zoneTouristique}', 'update');
-    Route::get('supprimerZone/{zoneTouristique}', 'destroy');
 });
 
     Route::post('/ajouterCommentaire/{zoneId}', [CommentaireController::class, 'ajouterCommentaire']);
-    Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
     Route::get('/listerCommentaires/{zoneId}', [CommentaireController::class, 'listerCommentaires']);
     Route::get('/compterCommentaires/{zoneId}', [CommentaireController::class, 'compterCommentaires']);
 
@@ -34,10 +29,17 @@ Route::controller(ZoneController::class)->group(function () {
     Route::put('/reservations/{reservationId}/refuser', [ReservationController::class, 'refuserReservation']);
 
 
-   // Route::middleware('auth')->group(function () {
+    Route::middleware(['auth','role:admin'])->group(function () {
       
-        Route::post('/create-guide', [Controller::class, 'createGuide']);
-        Route::get('/listerGuide', [Controller::class, 'listerGuides']);
-        Route::delete('/delete-guide/{userId}', [Controller::class, 'deleteGuide']);
+        Route::post('/create-guide', [AuthController::class, 'createGuide']);
+        Route::get('/listerGuide', [AuthController::class, 'listerGuides']);
+        Route::delete('/delete-guide/{userId}', [AuthController::class, 'deleteGuide']);
+        Route::post('ajoutZone', [ZoneController::class, 'store']);
+        Route::post('modifierZone/{zoneTouristique}', [ZoneController::class, 'update']);
+        Route::get('supprimerZone/{zoneTouristique}',  [ZoneController::class, 'destroy']);
+        Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
 
-    //});
+    });
+
+    Route::post('/modifierCompte', [AuthController::class, 'updateProfile']);
+ 

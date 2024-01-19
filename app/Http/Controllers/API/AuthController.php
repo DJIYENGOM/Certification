@@ -80,4 +80,79 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+    public function createGuide(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'guide', // Définir le rôle comme "guide"
+        ]);
+
+        return response()->json([
+            'message' => 'Guide créé avec succès',
+            'user' => $user,
+        ]);
+    }
+
+    public function listerGuides()
+    {
+        $guides = User::where('role', 'guide')->get();
+        return response()->json($guides);
+    }
+
+
+    public function deleteGuide($userId)
+    {
+        // Vérifier si l'utilisateur authentifié a le rôle d'administrateur
+        if (auth()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Vous n\'avez pas les autorisations nécessaires pour supprimer un guide.'], 403);
+        }
+
+        // Vérifier si l'utilisateur avec l'ID spécifié existe et a le rôle de guide
+        $guide = User::where('id', $userId)->where('role', 'guide')->first();
+
+        if (!$guide) {
+            return response()->json(['message' => 'Guide non trouvé.'], 404);
+        }
+
+        // Supprimer le guide
+        $guide->delete();
+
+        return response()->json(['message' => 'Guide supprimé avec succès']);
+    }
+
+    public function updateProfile(Request $request)
+{
+    // Récupérer l'utilisateur authentifié
+    $user = auth()->user();
+   
+    // Validation des données
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255',
+        'password' => 'nullable|string|min:6',
+    ]);
+
+    // Mise à jour des informations de l'utilisateur
+    $user->name = $request->name;
+    $user->email = $request->email;
+  
+    // Vérifier et mettre à jour le mot de passe s'il est fourni
+    if ($request->has('password')) {
+        $user->password = bcrypt($request->password);
+    }
+    // Enregistrer les modifications dans la base de données
+
+   // $user->update();
+
+    return response()->json(['message' => 'Profil mis à jour avec succès', 'user' => $user]);
+}
 }

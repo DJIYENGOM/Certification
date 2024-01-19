@@ -79,4 +79,5 @@ class ReservationController extends Controller
 
         return response()->json(['message' => 'Impossible de refuser la réservation']);
     }
+    
 }
