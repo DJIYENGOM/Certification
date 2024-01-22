@@ -1,0 +1,75 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API Title",
+        "description": "Your API Description",
+        "version": "1.0.0"
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "summary": "authentification",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "sen decouverte"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "ngomdjiye@gmail.com",
+                                "password": "123456"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

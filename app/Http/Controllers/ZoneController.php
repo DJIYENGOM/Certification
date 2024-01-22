@@ -20,7 +20,7 @@ class ZoneController extends Controller
             'nom' => 'required|string',
             'description' => 'required|string',
             'lieu' => 'required|string',
-            'images' => 'required|file',
+            'images.*' => 'nullable'|'file'
         ]);
     
         // Utilisez l'authentification pour récupérer l'utilisateur actuel

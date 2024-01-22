@@ -21,4 +21,15 @@ class ZoneTouristique extends Model
     {
         return $this->hasMany(Commentaire::class);
     }
+
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function like()
+    {
+        return $this->hasMany(like::class);
+    }
 }

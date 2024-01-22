@@ -9,6 +9,8 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -73,5 +75,15 @@ class User extends Authenticatable implements JWTSubject
     public function commentaires()
     {
         return $this->hasMany(Commentaire::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function like()
+    {
+        return $this->hasMany(like::class);
     }
 }
