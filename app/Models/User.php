@@ -82,8 +82,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Reservation::class);
     }
 
-    public function like()
+    public function likes()
     {
-        return $this->hasMany(like::class);
-    }
+        return $this->hasMany(Like::class, 'user_id');    }
 }
