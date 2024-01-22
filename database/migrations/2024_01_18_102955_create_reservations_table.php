@@ -18,12 +18,14 @@ class CreateReservationsTable extends Migration
             $table->date('date_fin');
             $table->boolean('reservation_annuler')->default(false);
             $table->enum('validation', ['encours', 'accepter', 'refuser'])->default('encours');
-            $table->unsignedBigInteger('zone_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('zone');
+            $table->unsignedBigInteger('guide');
+            $table->unsignedBigInteger('visiteur');
             $table->timestamps();
 
-            $table->foreign('zone_id')->references('id')->on('zone_touristiques')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('zone')->references('id')->on('zone_touristiques')->onDelete('cascade');
+            $table->foreign('visiteur')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('guide')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

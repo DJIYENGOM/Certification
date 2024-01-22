@@ -151,8 +151,9 @@ class AuthController extends Controller
     }
     // Enregistrer les modifications dans la base de données
 
-   // $user->update();
+    //$user->update();
 
     return response()->json(['message' => 'Profil mis à jour avec succès', 'user' => $user]);
 }
+
 }
