@@ -47,26 +47,44 @@ class ReservationController extends Controller
         $reservations = Reservation::all();
         return response()->json($reservations);
     }
+    public function listerReservationsParVisiteur()
+    {
+        $user = auth()->user();
+        $reservations = Reservation::where('visiteur', $user->id)->get();
+        return response()->json($reservations);
+    }
 
     public function annulerReservation($reservationId)
     {
         $reservation = Reservation::findOrFail($reservationId);
-
+        $user = auth()->user();
+    
+        // Vérifiez si l'utilisateur connecté est le visiteur associé à la réservation
+        if ($user->id !== $reservation->visiteur) {
+            return response()->json(['message' => 'Vous n\'avez pas la permission d\'annuler cette réservation.'], 403);
+        }
+    
         // Vérifiez si la réservation peut être annulée
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->reservation_annuler = true;
             $reservation->save();
-         
+    
             return response()->json(['message' => 'Réservation annulée avec succès']);
-            
         }
-
-        return response()->json(['message' => 'Impossible de annuler la réservation car elle est deja traitée']);
+    
+        return response()->json(['message' => 'Impossible d\'annuler la réservation car elle est déjà traitée']);
     }
+    
 
     public function accepterReservation($reservationId)
     {
         $reservation = Reservation::findOrFail($reservationId);
+        
+        $user = auth()->user();
+       // Vérifiez si l'utilisateur connecté est le guide associé à la réservation
+        if ($user->id !== $reservation->guide) {
+            return response()->json(['message' => 'Vous n\'avez pas la permission d\'annuler cette réservation.'], 403);
+        }
 
         // Vérifiez si la réservation peut être acceptée
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
@@ -84,6 +102,12 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($reservationId);
 
+        $user = auth()->user();
+        // Vérifiez si l'utilisateur connecté est le guide associé à la réservation
+         if ($user->id !== $reservation->guide) {
+             return response()->json(['message' => 'Vous n\'avez pas la permission d\'annuler cette réservation.'], 403);
+         }
+         
         // Vérifiez si la réservation peut être refusée
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->validation = 'refuser';

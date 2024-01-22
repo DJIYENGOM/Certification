@@ -3,64 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
-use App\Http\Requests\StoreLikeRequest;
-use App\Http\Requests\UpdateLikeRequest;
-
+use Illuminate\Http\Request;  
+use App\Http\Requests\StoreLikeRequest;  
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function likeZoneTouristique(Request $request, $zoneTouristiqueId)
     {
-        //
+        $user = auth()->user();
+    
+        // Vérifiez si l'utilisateur a déjà aimé cette zone touristique
+        $existingLike = Like::where('user_id', $user->id)
+                            ->where('zone_id', $zoneTouristiqueId)
+                            ->first();
+    
+        if ($existingLike) {
+            return response()->json(['message' => 'Vous avez déjà aimé cette zone touristique.'], 400);
+        }
+    
+        // Ajoutez un like
+        $like = new Like([
+            'user_id' => $user->id,
+            'zone_id' => $zoneTouristiqueId,
+        ]);
+    
+        $like->save();
+    
+        return response()->json(['message' => 'Zone touristique aimée avec succès.']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function compterNombreLike($zoneId)
     {
-        //
+        $nombreLikes = Like::where('zone_id', $zoneId)->count();
+        return response()->json(['nombre_Like' => $nombreLikes]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreLikeRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Like $like)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateLikeRequest $request, Like $like)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Like $like)
-    {
-        //
-    }
 }
