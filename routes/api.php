@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ZoneController;
 
@@ -38,6 +39,9 @@ Route::controller(ZoneController::class)->group(function () {
         Route::delete('supprimerZone/{zoneTouristique}', [ZoneController::class, 'destroy']);
         Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);
+        Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
+
+
 
     });
 
@@ -50,6 +54,7 @@ Route::controller(ZoneController::class)->group(function () {
     Route::post('/zone-touristique/like/{id}', [LikeController::class, 'likeZoneTouristique'])->middleware('auth');
     Route::get('/compterNombreLike/{zoneId}', [LikeController::class, 'compterNombreLike']);
 
+    Route::post('/EnvoieMessage', [MessageController::class, 'EnvoieMessage']);
+
 
     Route::post('/modifierCompte', [AuthController::class, 'updateProfile']);
- 
