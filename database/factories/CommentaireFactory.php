@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\ZoneTouristique;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +16,18 @@ class CommentaireFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'contenu' => $this->faker->paragraph,
+            'user_id' => function () {
+                return User::factory()->create()->id;
+            },
+            'zone_id' => function () {
+                return ZoneTouristique::factory()->create()->id;
+            },
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
