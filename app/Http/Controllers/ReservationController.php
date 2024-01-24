@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
 use App\Models\User;
-use App\Notifications\MailAcceptReservation;
-use App\Notifications\MailRefuReservation;
-use App\Notifications\MailReservation;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\MailReservation;
+use App\Notifications\MailRefuReservation;
+use App\Notifications\MailAcceptReservation;
+use App\Notifications\AnnulationDeLaReservation;
 
 class ReservationController extends Controller
 {
@@ -68,7 +69,9 @@ class ReservationController extends Controller
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->reservation_annuler = true;
             $reservation->save();
-    
+            $user = User::find($reservation->guidedd);
+            $user->notify(new AnnulationDeLaReservation());
+            
             return response()->json(['message' => 'Réservation annulée avec succès']);
         }
     
