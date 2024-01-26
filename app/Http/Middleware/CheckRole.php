@@ -18,7 +18,7 @@ class CheckRole
     public function handle(Request $request, Closure $next, $role)
     {
         if (!$request->user() || $request->user()->role !== $role) {
-            abort(403, 'Unauthorized');
+            abort(403, 'Vous n\'etes pas autorisé à faire cette tache');
         }
 
         return $next($request);

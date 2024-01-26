@@ -10,6 +10,7 @@ use App\Notifications\MailReservation;
 use App\Notifications\MailRefuReservation;
 use App\Notifications\MailAcceptReservation;
 use App\Notifications\AnnulationDeLaReservation;
+use App\Notifications\NewReservation;
 
 class ReservationController extends Controller
 {
@@ -20,9 +21,9 @@ class ReservationController extends Controller
         $request->validate([
             'Nom' => 'required|string',
             'email' => 'required|email',
-            'telephone' => 'required|string',
+            'telephone' => 'required|string|regex:/^(77|76|78|70)\d{7}$/',
             'nombre_de_personnes' => 'required|integer',
-            'date_debut' => 'required|date',
+            'date_debut' => 'required|date|after:today',
             'date_fin' => 'required|date|after:date_debut',
             'zone' => 'required|exists:zone_touristiques,id',
             'guide' => 'required|exists:users,id,role,guide',
@@ -36,7 +37,10 @@ class ReservationController extends Controller
         $reservation->save();
 
         $user = User::find($reservation->visiteur);
-         $user->notify(new MailReservation());
+        $user->notify(new MailReservation());
+
+        $user = User::find($reservation->guide);
+        $user->notify(new NewReservation());
 
         return response()->json(['message' => 'Votre réservation a été bien prise en charge. Veuillez vérifier votre boite e-mail.']);
 

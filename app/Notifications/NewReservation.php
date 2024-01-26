@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AnnulationDeLaReservation extends Notification
+class NewReservation extends Notification
 {
     use Queueable;
 
@@ -35,7 +35,7 @@ class AnnulationDeLaReservation extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Une reservation a été annuler.')
+                    ->line('Bonjour chere compagnie vous avez une nouvelle resevation')
                     ->action('Veillez verifier la liste des resevations effectuée par vos clients', url('/'));
     }
 

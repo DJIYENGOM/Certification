@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\ContacterWatsapController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordOublierController;
@@ -61,3 +62,5 @@ Route::controller(ZoneController::class)->group(function () {
     Route::post('forget-password', [PasswordOublierController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
     Route::get('reset-password/{token}', [PasswordOublierController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset-password', [PasswordOublierController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+    Route::post('/redirigerWhatsApp/{id}', [ContacterWatsapController::class, 'redirigerWhatsApp']);

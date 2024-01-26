@@ -20,24 +20,26 @@ class ZoneController extends Controller
             'nom' => 'required|string',
             'description' => 'required|string',
             'lieu' => 'required|string',
-            'images.*' => 'nullable'|'file'
+            'images.*' => 'sometimes'
         ]);
+
+      
     
         // Utilisez l'authentification pour récupérer l'utilisateur actuel
         $user = auth()->user();
-    
         // Créez une nouvelle instance de ZoneTouristique avec les données fournies et l'ID de l'utilisateur
-        $zoneTouristique = new ZoneTouristique([
+        $zoneTouristique = new ZoneTouristique();
+        
+            if($request->hasFile('images')){
+           $monimage=$request->file('images')->store('images', 'public');
+           $zoneTouristique->images = $monimage;
 
-            $monimage=$request->file('images')->store('images', 'public'),
-
-
-            'nom' => $request->input('nom'),
-            'description' => $request->input('description'),
-            'lieu' => $request->input('lieu'),
-            'images' => $monimage,
-            'user_id' => $user->id,
-        ]);
+            }
+            $zoneTouristique->nom = $request->input('nom');
+            $zoneTouristique->description =$request->input('description');
+            $zoneTouristique->lieu = $request->input('lieu');
+            $zoneTouristique->user_id = $user->id;
+        
     
         // Sauvegardez la zone touristique dans la base de données
         $zoneTouristique->save();

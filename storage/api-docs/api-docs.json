@@ -20,10 +20,205 @@
         }
     },
     "consumes": [
-        "application/json"
+        "multipart/form-data"
     ],
     "paths": {
-        "/api/reservations/refuser/": {
+        "/api/forget-password": {
+            "post": {
+                "summary": "mot de passe oublier",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion des mots de passes"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "email": "ngomdjiye@gmail.com"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/listeMessage": {
+            "get": {
+                "summary": "liste des messages",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Messages"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/EnvoieMessage": {
+            "post": {
+                "summary": "envoyer un message aux administrat",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Messages"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "contenu": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "nom": "Fatou",
+                                "email": "fatou@gmial.Com",
+                                "contenu": "magnifique"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/refuser/{reservationId}": {
             "put": {
                 "summary": "Refuser une reservation",
                 "description": "",
@@ -36,32 +231,18 @@
                                 "example": ""
                             }
                         }
-                    }
-                },
-                "tags": [
-                    "gestion guides"
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "reservationId",
-                        "type": "string"
                     },
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/reservations/accepter/": {
-            "put": {
-                "summary": "Accepter une reservation",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -87,13 +268,90 @@
                 ]
             }
         },
-        "/api/delete-guide/": {
+        "/api/reservations/accepter/{reservationId}": {
+            "put": {
+                "summary": "Accepter une reservation",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "reservationId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/delete-guide/{userId}": {
             "delete": {
                 "summary": "supprimer ou bloquer un guide",
                 "description": "",
                 "responses": {
                     "204": {
                         "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -132,6 +390,24 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -159,6 +435,33 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -173,7 +476,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -198,13 +501,31 @@
                 }
             }
         },
-        "/api/compterNombreLike/": {
+        "/api/compterNombreLike/{id}": {
             "get": {
                 "summary": "Nombre de likes pour un article",
                 "description": "",
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -230,13 +551,40 @@
                 ]
             }
         },
-        "/api/zone-touristique/like/": {
+        "/api/zone-touristique/like/{zoneId}": {
             "post": {
                 "summary": "effectuer un like pour un article",
                 "description": "",
                 "responses": {
                     "201": {
                         "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -262,13 +610,31 @@
                 ]
             }
         },
-        "/api/reservations/annuler/": {
+        "/api/reservations/annuler/{reservationId}": {
             "put": {
                 "summary": "Annuler sa reservation",
                 "description": "",
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -307,6 +673,24 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -328,6 +712,24 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -361,6 +763,33 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -375,7 +804,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -388,15 +817,21 @@
                                     "telephone": {
                                         "type": "string"
                                     },
-                                    "nombre_de_personnes": "integer",
+                                    "nombre_de_personnes": {
+                                        "type": "integer"
+                                    },
                                     "date_debut": {
                                         "type": "string"
                                     },
                                     "date_fin": {
                                         "type": "string"
                                     },
-                                    "zone": "integer",
-                                    "guide": "integer"
+                                    "zone": {
+                                        "type": "integer"
+                                    },
+                                    "guide": {
+                                        "type": "integer"
+                                    }
                                 }
                             },
                             "example": {
@@ -414,7 +849,7 @@
                 }
             }
         },
-        "/api/compterCommentaires/": {
+        "/api/compterCommentaires/{zoneId}": {
             "get": {
                 "summary": "Compter le nombre de commentaires",
                 "description": "",
@@ -427,32 +862,18 @@
                                 "example": ""
                             }
                         }
-                    }
-                },
-                "tags": [
-                    "Ajouter un commentaire sur un article publié"
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "zoneId",
-                        "type": "string"
                     },
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/listerCommentaires/": {
-            "get": {
-                "summary": "lister les commentaires",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -478,13 +899,90 @@
                 ]
             }
         },
-        "/api/ajouterCommentaire/": {
+        "/api/listerCommentaires/{zoneId}": {
+            "get": {
+                "summary": "lister les commentaires",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Ajouter un commentaire sur un article publié"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "zoneId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/ajouterCommentaire/{zoneId}": {
             "post": {
                 "summary": "Ajouter un commentaire",
                 "description": "",
                 "responses": {
                     "201": {
                         "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -510,7 +1008,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -527,13 +1025,31 @@
                 }
             }
         },
-        "/api/detailZone/": {
+        "/api/detailZone/{zoneTouristique}": {
             "get": {
                 "summary": "detail d'une zone",
                 "description": "",
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -572,6 +1088,24 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -586,13 +1120,40 @@
                 ]
             }
         },
-        "/api/modifierZone/": {
+        "/api/modifierZone/{zoneTouristique}": {
             "post": {
                 "summary": "Modifier l'article(zone publiée)",
                 "description": "",
                 "responses": {
                     "201": {
                         "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -618,7 +1179,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -632,7 +1193,8 @@
                                         "type": "string"
                                     },
                                     "images": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 }
                             },
@@ -640,20 +1202,50 @@
                                 "nom": "sine saloum",
                                 "description": "zone touristique senegalaise",
                                 "lieu": "sine",
-                                "images": ""
+                                "images": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
                             }
                         }
                     }
                 }
             }
         },
-        "/api/supprimerZone/": {
+        "/api/supprimerZone/{zoneTouristique}": {
             "delete": {
                 "summary": "Supprimer l'article(zone publiée)",
                 "description": "",
                 "responses": {
                     "204": {
                         "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -679,7 +1271,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -721,6 +1313,33 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -735,11 +1354,11 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "Nom": {
+                                    "nom": {
                                         "type": "string"
                                     },
                                     "description": {
@@ -749,15 +1368,19 @@
                                         "type": "string"
                                     },
                                     "images": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 }
                             },
                             "example": {
-                                "Nom": "ville de Dakar",
-                                "description": "ville touristique",
-                                "lieu": "dakar",
-                                "images": ""
+                                "nom": "Monument de la renaissance",
+                                "description": "Monument ",
+                                "lieu": "Dakar",
+                                "images": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
                             }
                         }
                     }
@@ -771,6 +1394,33 @@
                 "responses": {
                     "201": {
                         "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -804,6 +1454,33 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -818,7 +1495,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
@@ -852,6 +1529,33 @@
                                 "example": ""
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     }
                 },
                 "tags": [
@@ -866,7 +1570,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
