@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ZoneTouristique>
  */
 class ZoneTouristiqueFactory extends Factory
 {
@@ -21,6 +21,7 @@ class ZoneTouristiqueFactory extends Factory
             'nom' => $this->faker->word,
             'description' => $this->faker->paragraph,
             'lieu' => $this->faker->city,
+            'statut' => 'non publier',
             'images' => null, // Vous pouvez ajuster cela selon vos besoins
             'user_id' => function () {
                 return User::factory()->create()->id;

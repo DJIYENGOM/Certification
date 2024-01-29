@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('duree');
             $table->string('cout');
+            $table->enum('statut', ['publier', 'non publier'])->default('non publier');
             $table->string('images')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

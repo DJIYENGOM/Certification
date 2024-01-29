@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\ZoneTouristique;
+use App\Notifications\NouvellePublication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class ZoneController extends Controller
@@ -15,7 +17,7 @@ class ZoneController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $request->validate([
             'nom' => 'required|string',
             'description' => 'required|string',
@@ -39,7 +41,7 @@ class ZoneController extends Controller
             $zoneTouristique->nom = $request->input('nom');
             $zoneTouristique->description =$request->input('description');
             $zoneTouristique->duree = $request->input('duree');
-            $zoneTouristique->cout = $request->input('cout');
+            $zoneTouristique->cout = $request->input('cout');  
             $zoneTouristique->user_id = $user->id;
         
     
@@ -51,9 +53,14 @@ class ZoneController extends Controller
     }
     
 
-    public function show(ZoneTouristique $zoneTouristique)
+    public function detailZone(ZoneTouristique $zoneTouristique)
     {
         return response()->json($zoneTouristique);
+    }
+    public function listeZonesPubliees()
+    {
+        $zones = ZoneTouristique::where('statut', 'publier')->get();
+        return response()->json($zones);
     }
 
     public function update(Request $request, ZoneTouristique $zoneTouristique)
@@ -77,5 +84,33 @@ class ZoneController extends Controller
         $zoneTouristique->delete();
 
         return response()->json(['message' => 'Zone touristique supprimée avec succès']);
+    }
+
+
+    public function PublierZone($ZoneId)
+    {
+        $zone = ZoneTouristique::findOrFail($ZoneId);
+
+        $user = auth()->user();
+        // Vérifiez si l'utilisateur connecté est le guide associé à la réservation
+         if ($user->id !== $zone->user_id) {
+             return response()->json(['message' => 'Vous n\'avez pas la permission d\'effectuer cette action.'], 403);
+         }
+         
+        // Vérifiez si la réservation peut être refusée
+        if ($zone->statut === 'non publier' ) {
+            $zone->statut = 'publier';
+            $zone->save();
+               
+            $users = User::all();
+            foreach ($users as $user) {
+                $user->notify(new NouvellePublication());
+            }
+         
+
+            return response()->json(['message' => 'Zone publiee avec succès']);
+        }
+
+        return response()->json(['message' => 'Cette zone est deja publiee']);
     }
 }
