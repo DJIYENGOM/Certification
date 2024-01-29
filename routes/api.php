@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ContacterWatsapController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordOublierController;
@@ -39,12 +40,14 @@ Route::controller(ZoneController::class)->group(function () {
     Route::middleware(['checkRole:admin'])->group(function () {
         Route::post('/create-guide', [AuthController::class, 'createGuide']);
         Route::get('/listerGuide', [AuthController::class, 'listerGuides']);
+        Route::get('NombreGuides', [GuideController::class, 'compterNombreGuides']);
         Route::delete('/delete-guide/{userId}', [AuthController::class, 'deleteGuide']);
 
         Route::post('ajoutZone', [ZoneController::class, 'store']);
+        Route::get('NombreZones', [ZoneController::class, 'compterNombreZones']);
         Route::get('listeZone', [ZoneController::class, 'index']);
         Route::get('PublierZone/{ZoneId}', [ZoneController::class, 'PublierZone']);
-        Route::put('modifierZone/{zoneTouristique}', [ZoneController::class, 'update']);
+        Route::post('modifierZone/{zoneTouristique}', [ZoneController::class, 'update']);
         Route::delete('supprimerZone/{zoneTouristique}', [ZoneController::class, 'destroy']);
         Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);

@@ -15,6 +15,12 @@ class ZoneController extends Controller
         return response()->json($zonesTouristiques);
     }
 
+    public function compterNombreZones()
+    {
+        $nombreZone = ZoneTouristique::all()->count();
+        return response()->json(['nombre de Zones' => $nombreZone]);
+    }
+
     public function store(Request $request)
     {
         // dd($request->all());
@@ -65,16 +71,24 @@ class ZoneController extends Controller
 
     public function update(Request $request, ZoneTouristique $zoneTouristique)
     {
+       // dd($request->all());
         $request->validate([
             'nom' => 'required|string',
             'description' => 'required|string',
             'duree' => 'required|string',
             'cout' => 'required|string',   
-            'images' => 'nullable|file',
+            'images.*' => 'sometimes'
 
         ]);
-
-        $zoneTouristique->update($request->all());
+      
+        $zoneTouristique->fill($request->all());
+        if($request->hasFile('images')){
+            $monimage=$request->file('images')->store('images', 'public');
+            $zoneTouristique->images = $monimage;
+ 
+             }
+           
+        $zoneTouristique->update();
 
         return response()->json(['message' => 'Zone touristique mise à jour avec succès']);
     }
@@ -102,7 +116,7 @@ class ZoneController extends Controller
             $zone->statut = 'publier';
             $zone->save();
                
-            $users = User::all();
+            $users = User::where('role', 'visiteur')->get();
             foreach ($users as $user) {
                 $user->notify(new NouvellePublication());
             }

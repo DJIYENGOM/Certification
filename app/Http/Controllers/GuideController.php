@@ -35,9 +35,10 @@ class GuideController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Guide $guide)
+    public function compterNombreGuides()
     {
-        //
+        $nombreGuides = Guide::all()->count();
+        return response()->json(['nombre de Guides' => $nombreGuides]);
     }
 
     /**
