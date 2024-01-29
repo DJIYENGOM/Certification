@@ -10,7 +10,7 @@ class ZoneTouristique extends Model
 
     protected $table = 'zone_touristiques';
 
-    protected $fillable = ['nom', 'description', 'lieu', 'images', 'user_id'];
+    protected $fillable = ['nom', 'description', 'duree','cout', 'images', 'statut','user_id'];
 
     public function user()
     {
@@ -31,5 +31,10 @@ class ZoneTouristique extends Model
     public function like()
     {
         return $this->hasMany(like::class);
+    }
+
+    public function guides()
+    {
+        return $this->hasMany(Commentaire::class);
     }
 }

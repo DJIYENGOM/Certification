@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Guide;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','login_guide']]);
     }
 
     public function login(Request $request)
@@ -39,6 +40,34 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+
+    public function login_guide(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        $credentials = $request->only('email', 'password');
+        $token = Auth::guard('apiguide')->attempt($credentials);
+        
+        if (!$token) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $guide = Auth::guard('apiguide')->user();
+        return response()->json([
+            'guide' => $guide,
+            'authorization' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
+
+
 
     public function register(Request $request)
     {
@@ -87,13 +116,24 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'description'=> 'required|string',
+            'duree_experience' => 'required|string',
+            'zone_id' => 'required|exists:zone_touristiques,id',
+            'image' => 'sometimes'
         ]);
-
-        $user = User::create([
+        $imageName=null;
+        if($request->hasFile('image')){
+            $imageName=$request->file('image')->store('image', 'public');
+             }
+        $user = Guide::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'guide', // Définir le rôle comme "guide"
+            'description' => $request->description,
+            'duree_experience' => $request->duree_experience,
+            'zone_id' => $request->zone_id,
+            'image'=> $imageName
+
         ]);
 
         return response()->json([

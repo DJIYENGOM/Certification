@@ -67,6 +67,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+//un user admin peut ajouter un ou plusieurs Zones touristiques
     public function zonesTouristiques()
     {
         return $this->hasMany(ZoneTouristique::class);
@@ -84,5 +85,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function likes()
     {
-        return $this->hasMany(Like::class, 'user_id');    }
+        return $this->hasMany(Like::class, 'user_id');   
+     }
+     public function guides()
+     {
+         return $this->hasMany(ZoneTouristique::class);
+     }
 }

@@ -25,7 +25,7 @@ class CreateReservationsTable extends Migration
 
             $table->foreign('zone')->references('id')->on('zone_touristiques')->onDelete('cascade');
             $table->foreign('visiteur')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('guide')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('guide')->references('id')->on('guides')->onDelete('cascade');
         });
     }
 

@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('guides', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role', ['admin', 'visiteur'])->default('visiteur');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
-            $table->rememberToken();
+            $table->text('description')->nullable();
+            $table->integer('duree_experience');
+            $table->string('image')->nullable();
+            $table->unsignedBigInteger('zone_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('zone_id')->references('id')->on('zone_touristiques')->onDelete('cascade');
 
         });
     }
@@ -30,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('guides');
     }
 };
-

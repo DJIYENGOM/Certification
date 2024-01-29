@@ -19,7 +19,8 @@ class ZoneController extends Controller
         $request->validate([
             'nom' => 'required|string',
             'description' => 'required|string',
-            'lieu' => 'required|string',
+            'duree' => 'required|string',
+            'cout' => 'required|string',
             'images.*' => 'sometimes'
         ]);
 
@@ -37,7 +38,8 @@ class ZoneController extends Controller
             }
             $zoneTouristique->nom = $request->input('nom');
             $zoneTouristique->description =$request->input('description');
-            $zoneTouristique->lieu = $request->input('lieu');
+            $zoneTouristique->duree = $request->input('duree');
+            $zoneTouristique->cout = $request->input('cout');
             $zoneTouristique->user_id = $user->id;
         
     
@@ -59,8 +61,10 @@ class ZoneController extends Controller
         $request->validate([
             'nom' => 'required|string',
             'description' => 'required|string',
-            'lieu' => 'required|string',
+            'duree' => 'required|string',
+            'cout' => 'required|string',   
             'images' => 'nullable|file',
+
         ]);
 
         $zoneTouristique->update($request->all());

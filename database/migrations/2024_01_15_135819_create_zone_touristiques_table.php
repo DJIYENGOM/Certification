@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->text('description');
-            $table->string('lieu');
+            $table->string('duree');
+            $table->string('cout');
             $table->string('images')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

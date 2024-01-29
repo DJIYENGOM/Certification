@@ -45,6 +45,11 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+
+        'apiguide' => [
+            'driver' => 'jwt',
+            'provider' => 'guides',
+        ],
     ],
 
     /*
@@ -68,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'guides' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Guide::class,
         ],
 
         // 'users' => [

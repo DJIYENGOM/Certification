@@ -14,6 +14,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
     Route::post('register', 'register');
     Route::post('logout', 'logout');
+    Route::post('login/guide', 'login_guide');
     Route::post('refresh', 'refresh');
 });
 
@@ -30,20 +31,22 @@ Route::controller(ZoneController::class)->group(function () {
     Route::get('/Mes_reservations', [ReservationController::class, 'listerReservationsParVisiteur']);
     Route::put('/reservations/annuler/{reservationId}', [ReservationController::class, 'annulerReservation']);
 
+    Route::middleware(['auth:api', 'role:admin'])->group(function () {
+        Route::post('ajoutZone', [ZoneController::class, 'store']);
+
+    });
 
     Route::middleware(['checkRole:admin'])->group(function () {
         Route::post('/create-guide', [AuthController::class, 'createGuide']);
         Route::get('/listerGuide', [AuthController::class, 'listerGuides']);
         Route::delete('/delete-guide/{userId}', [AuthController::class, 'deleteGuide']);
 
-        Route::post('ajoutZone', [ZoneController::class, 'store']);
+       // Route::post('ajoutZone', [ZoneController::class, 'store']);
         Route::put('modifierZone/{zoneTouristique}', [ZoneController::class, 'update']);
         Route::delete('supprimerZone/{zoneTouristique}', [ZoneController::class, 'destroy']);
         Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);
         Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
-
-
 
     });
 
