@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
-use Illuminate\Http\Request;
+use App\Mail\Message as MailMessage;
+use App\Models\User;
 
 class MessageController extends Controller
 {
@@ -16,18 +19,25 @@ class MessageController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
+            'telephone' => 'required|string|max:20',
             'email' => 'required|string|email',
             'contenu' => 'required|string',
         ]);
 
         $message = new Message([
             'nom' => $request->input('nom'),
+            'telephone' => $request->input('telephone'),
             'email' => $request->input('email'),
             'contenu' => $request->input('contenu'),
 
         ]);
 
         $message->save();
+        $users=User::where('role','admin')->get();
+        foreach($users as $user){
+            Mail::to($user->email)->send(new MailMessage($message->nom, $message->contenu));
+        }
+
 
         return response()->json(['message' => 'message ajouté avec succès']);
     }
