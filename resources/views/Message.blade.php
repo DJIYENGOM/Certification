@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>Message de {{$username}}</h1>
+    <h2>Voici son Email si vous voulez lui repondre{{$email}}</h2>
+
     <p>{{$contenue}}</p>
 </body>
 </html>

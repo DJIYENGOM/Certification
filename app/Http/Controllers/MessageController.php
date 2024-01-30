@@ -35,7 +35,7 @@ class MessageController extends Controller
         $message->save();
         $users=User::where('role','admin')->get();
         foreach($users as $user){
-            Mail::to($user->email)->send(new MailMessage($message->nom, $message->contenu)); 
+            Mail::to($user->email)->send(new MailMessage($message->nom, $message->contenu, $message->email)); 
         }
 
 

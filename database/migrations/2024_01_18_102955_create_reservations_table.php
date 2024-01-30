@@ -14,8 +14,8 @@ class CreateReservationsTable extends Migration
             $table->string('email');
             $table->string('telephone');
             $table->integer('nombre_de_personnes');
-            $table->date('date_debut');
-            $table->date('date_fin');
+            $table->dateTime('date_debut');
+            $table->dateTime('date_fin');
             $table->boolean('reservation_annuler')->default(false);
             $table->enum('validation', ['encours', 'accepter', 'refuser'])->default('encours');
             $table->unsignedBigInteger('zone');
