@@ -72,3 +72,7 @@ Route::controller(ZoneController::class)->group(function () {
     Route::post('reset-password', [PasswordOublierController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
     Route::post('/redirigerWhatsApp/{id}', [ContacterWatsapController::class, 'redirigerWhatsApp']);
+
+    Route::post('/Recherche', [ContacterWatsapController::class, 'Recherche']);
+
+    

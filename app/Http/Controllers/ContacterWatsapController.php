@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ZoneTouristique;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -30,5 +31,10 @@ class ContacterWatsapController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function Recherche(Request $request){
+        $trouver=ZoneTouristique::where('nom','LIKE','%'.$request->nom.'%')->get();
+        return $trouver;
     }
 }
