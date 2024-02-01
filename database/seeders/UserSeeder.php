@@ -31,5 +31,14 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'dié NGOM',
+            'email' => 'd.ngom@isepdiamniadio.edu.sn',
+            'role' => 'visiteur',
+            'password' => Hash::make('password'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

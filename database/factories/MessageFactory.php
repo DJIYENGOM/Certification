@@ -20,6 +20,7 @@ class MessageFactory extends Factory
         return [
             'nom' => fake()->name(),
             'email' => fake()->safeEmail(),
+            'telephone' => '771318103',
             'contenu' => $this->faker->paragraph,
         ];
     }

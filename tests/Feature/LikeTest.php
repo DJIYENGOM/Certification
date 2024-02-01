@@ -15,7 +15,7 @@ class LikeTest extends TestCase
      */
     public function testFaireLike(): void
     {
-        $createUser= User::factory()->create(['email' => 'go23djie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'go23d23e@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $like= Like::factory()->create();

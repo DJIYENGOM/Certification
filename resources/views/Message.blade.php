@@ -6,9 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Message de {{$username}}</h1>
-    <h2>Voici son Email si vous voulez lui repondre{{$email}}</h2>
-
+    <h2>Message de {{$username}}</h2>
     <p>{{$contenue}}</p>
+    <h3>Voici son Email et son numero de telephone si vous voulez lui repondre</h3>
+    <h3>{{$email}}</h3>
+    <h3>{{$telephone}}</h3>
+
 </body>
 </html>

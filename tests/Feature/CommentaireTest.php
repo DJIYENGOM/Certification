@@ -12,7 +12,7 @@ class CommentaireTest extends TestCase
 {
     public function testFaireCommentaire(): void
     {
-        $createUser= User::factory()->create(['email' => 'gomedjie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'gome8629e@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $commentaire= Commentaire::factory()->create();
@@ -22,9 +22,9 @@ class CommentaireTest extends TestCase
 
     public function testSupprimerCommentaire(): void
     {
-        $createUser= User::factory()->create(['email' => 'derdj@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'de09j@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
-        $commentaire=Commentaire::Find(2);
+        $commentaire=Commentaire::Find(3);
         $response = $this->delete('api/supprimerCommentaire/'.$commentaire->id);
         $response->assertStatus(200);
     }

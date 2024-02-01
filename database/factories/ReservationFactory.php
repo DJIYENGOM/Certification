@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Guide;
 use App\Models\ZoneTouristique;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,15 +27,21 @@ class ReservationFactory extends Factory
             'nombre_de_personnes' => $this->faker->randomDigit,
             'date_debut' => $this->faker->date,
             'date_fin' => $this->faker->date,
-            'reservation_annuler' => $this->faker->boolean,
+            'reservation_annuler' => 0,
             'validation' => 'encours',
             'zone' => function () {
                 return ZoneTouristique::factory()->create()->id;
             },
-            'visiteur' => function () {
-                return User::factory()->create(['role' => 'visiteur'])->id;
-            },
-            'guide' => auth()->user()->id,
+            //'visiteur' => Auth::user()->id,
+            'visiteur' => 1,
+            'guide' =>  Auth::user()->id,
+
+            // 'guide' =>function () {
+            //     return Guide::factory()->create()->id;
+            // },
+            // 'visiteur' =>function () {
+            //     return user::factory()->create()->id;
+            // },
             'created_at' => now(),
             'updated_at' => now(),
         ];

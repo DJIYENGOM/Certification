@@ -7,6 +7,8 @@ use App\Models\ZoneTouristique;
 use App\Notifications\NouvellePublication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 class ZoneController extends Controller
 {
     public function index()
@@ -24,7 +26,8 @@ class ZoneController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $request->validate([
+        $validator=Validator::make($request->all(),[
+        
             'nom' => 'required|string',
             'description' => 'required|string',
             'duree' => 'required|string',
@@ -32,7 +35,11 @@ class ZoneController extends Controller
             'images.*' => 'sometimes'
         ]);
 
-      
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
     
         // Utilisez l'authentification pour récupérer l'utilisateur actuel
         $user = auth()->user();
@@ -72,7 +79,8 @@ class ZoneController extends Controller
     public function update(Request $request, ZoneTouristique $zoneTouristique)
     {
        // dd($request->all());
-        $request->validate([
+       $validator=Validator::make($request->all(),[
+
             'nom' => 'required|string',
             'description' => 'required|string',
             'duree' => 'required|string',
@@ -80,7 +88,11 @@ class ZoneController extends Controller
             'images.*' => 'sometimes'
 
         ]);
-      
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $zoneTouristique->fill($request->all());
         if($request->hasFile('images')){
             $monimage=$request->file('images')->store('images', 'public');

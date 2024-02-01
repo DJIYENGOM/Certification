@@ -22,7 +22,7 @@ class AuthentificationTest extends TestCase
     public function testLogin(): void
     {
         $user= User::factory()->create();
-        $createUser= ['email' => 'ngomdjiye@gmail.com', 'password' => '123456'];
+        $createUser= ['email' => 'ngomdjiye@gmail.com', 'password' => 'password'];
         $insert=$this->post('api/login',$createUser);
         $insert->assertStatus(200);
 

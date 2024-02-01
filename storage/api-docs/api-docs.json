@@ -203,19 +203,163 @@
                                     "email": {
                                         "type": "string"
                                     },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
                                     "contenu": {
                                         "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "nom": "Fatou",
-                                "email": "fatou@gmial.Com",
-                                "contenu": "magnifique"
+                                "nom": "Seydou Diallo",
+                                "email": "dousey2003@gmail.com",
+                                "telephone": "770417780",
+                                "contenu": "Bonjour je voulais integrer votre tet"
                             }
                         }
                     }
                 }
+            }
+        },
+        "/api/listerGuide": {
+            "get": {
+                "summary": "liste de tous les guides",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/listerGuidesParZone/{zoneId}": {
+            "get": {
+                "summary": "liste guides par Zone",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "zoneId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/NombreGuides": {
+            "get": {
+                "summary": "Nombre de guides",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
             }
         },
         "/api/reservations/refuser/{reservationId}": {
@@ -268,7 +412,7 @@
                 ]
             }
         },
-        "/api/reservations/accepter/{reservationId}": {
+        "/api/reservations/accepter/reservationId": {
             "put": {
                 "summary": "Accepter une reservation",
                 "description": "",
@@ -318,7 +462,7 @@
                 ]
             }
         },
-        "/api/delete-guide/{userId}": {
+        "/api/delete-guide/{guideId}": {
             "delete": {
                 "summary": "supprimer ou bloquer un guide",
                 "description": "",
@@ -366,54 +510,9 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "userId",
+                        "name": "guideId",
                         "type": "string"
                     },
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/listerGuide": {
-            "get": {
-                "summary": "lister des guides",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "gestion guides"
-                ],
-                "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
@@ -488,13 +587,25 @@
                                     },
                                     "password": {
                                         "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "duree_experience": {
+                                        "type": "string"
+                                    },
+                                    "zone_id": {
+                                        "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "name": "dousey",
-                                "email": "seydou.portefolio@gmail.com",
-                                "password": "123456"
+                                "name": "seydou",
+                                "email": "sey@gmail.com",
+                                "password": "1456",
+                                "description": "competent et gentil",
+                                "duree_experience": "5 ans",
+                                "zone_id": "1"
                             }
                         }
                     }
@@ -610,7 +721,52 @@
                 ]
             }
         },
-        "/api/reservations/annuler/{reservationId}": {
+        "/api/listerReservationsParGuide": {
+            "get": {
+                "summary": "liste reservation par guide",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Gestion des reservations"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/reservations/annuler/reservationId": {
             "put": {
                 "summary": "Annuler sa reservation",
                 "description": "",
@@ -837,11 +993,11 @@
                             "example": {
                                 "Nom": "Seydou",
                                 "email": "dousey2003@gmail.com",
-                                "telephone": "765537834",
-                                "nombre_de_personnes": 2,
-                                "date_debut": "2024-01-22",
-                                "date_fin": "2024-01-23",
-                                "zone": 4,
+                                "telephone": "765537830",
+                                "nombre_de_personnes": 12,
+                                "date_debut": "2024-01-31 12:59:02",
+                                "date_fin": "2024-02-25 12:59:02",
+                                "zone": 1,
                                 "guide": 3
                             }
                         }
@@ -1025,6 +1181,146 @@
                 }
             }
         },
+        "/api/NombreZones": {
+            "get": {
+                "summary": "Nombre de Zones",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Gestion des articles (zones)"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/listeZone": {
+            "get": {
+                "summary": "liste de toutes les zones",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Gestion des articles (zones)"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/PublierZone/{ZoneId}": {
+            "get": {
+                "summary": "Publier Zone",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Gestion des articles (zones)"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "ZoneId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
         "/api/detailZone/{zoneTouristique}": {
             "get": {
                 "summary": "detail d'une zone",
@@ -1075,7 +1371,7 @@
                 ]
             }
         },
-        "/api/listeZone": {
+        "/api/listeZonesPubliees": {
             "get": {
                 "summary": "liste des zones publiées",
                 "description": "",
@@ -1189,23 +1485,27 @@
                                     "description": {
                                         "type": "string"
                                     },
-                                    "lieu": {
+                                    "duree": {
                                         "type": "string"
                                     },
                                     "images": {
                                         "type": "string",
                                         "format": "binary"
+                                    },
+                                    "cout": {
+                                        "type": "string"
                                     }
                                 }
                             },
                             "example": {
                                 "nom": "sine saloum",
                                 "description": "zone touristique senegalaise",
-                                "lieu": "sine",
+                                "duree": "3h",
                                 "images": {
                                     "type": "string",
                                     "format": "binary"
-                                }
+                                },
+                                "cout": "2000f"
                             }
                         }
                     }
@@ -1364,23 +1664,106 @@
                                     "description": {
                                         "type": "string"
                                     },
-                                    "lieu": {
+                                    "": {
                                         "type": "string"
                                     },
                                     "images": {
                                         "type": "string",
                                         "format": "binary"
+                                    },
+                                    "duree": {
+                                        "type": "string"
+                                    },
+                                    "cout": {
+                                        "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "nom": "Monument de la renaissance",
-                                "description": "Monument ",
-                                "lieu": "Dakar",
+                                "nom": "Sali",
+                                "description": "ville touristique ",
+                                "": "",
                                 "images": {
                                     "type": "string",
                                     "format": "binary"
+                                },
+                                "duree": "2h",
+                                "cout": "5000"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login/guide": {
+            "post": {
+                "summary": "connexion guide",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorize",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "connexion"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
                                 }
+                            },
+                            "example": {
+                                "email": "dousey2003@gmail.com",
+                                "password": "123456"
                             }
                         }
                     }
@@ -1508,7 +1891,7 @@
                                 }
                             },
                             "example": {
-                                "email": "ngomdjiye@gmail.com",
+                                "email": "dousey2003@gmail.com",
                                 "password": "123456"
                             }
                         }
@@ -1586,8 +1969,8 @@
                                 }
                             },
                             "example": {
-                                "name": "Djiyé",
-                                "email": "ngomdjiye@gmail.com",
+                                "name": "Seydou",
+                                "email": "dousey2003@gmail.com",
                                 "password": "123456"
                             }
                         }

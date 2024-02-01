@@ -9,6 +9,7 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Mail\Message as MailMessage;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -17,13 +18,19 @@ class MessageController extends Controller
 
     public function EnvoieMessage(Request $request)
     {
-        $request->validate([
+       
+       $validator=Validator::make($request->all(),[
+
             'nom' => 'required|string|max:255',
-            'telephone' => 'required|string|max:20',
+            'telephone' => 'required|string|max:12',
             'email' => 'required|string|email',
             'contenu' => 'required|string',
         ]);
-
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $message = new Message([
             'nom' => $request->input('nom'),
             'telephone' => $request->input('telephone'),
@@ -35,7 +42,7 @@ class MessageController extends Controller
         $message->save();
         $users=User::where('role','admin')->get();
         foreach($users as $user){
-            Mail::to($user->email)->send(new MailMessage($message->nom, $message->contenu, $message->email)); 
+            Mail::to($user->email)->send(new MailMessage($message->nom, $message->contenu, $message->email, $message->telephone)); 
         }
 
 

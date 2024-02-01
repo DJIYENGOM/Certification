@@ -12,7 +12,7 @@ class MessageTest extends TestCase
 {
     public function testEnvoyerMessage(): void
     {
-        $createUser= User::factory()->create(['email' => 'djie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'djie097@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $message= Message::factory()->create();

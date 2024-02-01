@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Guide;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -71,12 +72,18 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+       // $request->validate([
+       $validator=Validator::make($request->all(),[
+
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
-    
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -112,15 +119,20 @@ class AuthController extends Controller
 
     public function createGuide(Request $request)
     {
-        $request->validate([
+       $validator=Validator::make($request->all(),[
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:guides,email',
             'password' => 'required|string|min:6',
             'description'=> 'required|string',
             'duree_experience' => 'required|string',
             'zone_id' => 'required|exists:zone_touristiques,id',
             'image' => 'sometimes'
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $imageName=null;
         if($request->hasFile('image')){
             $imageName=$request->file('image')->store('image', 'public');
@@ -138,26 +150,20 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Guide créé avec succès',
-            'user' => $user,
+            'guide' => $user,
         ]);
     }
 
-    public function listerGuides()
-    {
-        $guides = User::where('role', 'guide')->get();
-        return response()->json($guides);
-    }
 
-
-    public function deleteGuide($userId)
+    public function deleteGuide($guideId)
     {
         // Vérifier si l'utilisateur authentifié a le rôle d'administrateur
         if (auth()->user()->role !== 'admin') {
             return response()->json(['message' => 'Vous n\'avez pas les autorisations nécessaires pour supprimer un guide.'], 403);
         }
 
-        // Vérifier si l'utilisateur avec l'ID spécifié existe et a le rôle de guide
-        $guide = User::where('id', $userId)->where('role', 'guide')->first();
+        // Vérifier si l'utilisateur avec l'ID spécifié existe 
+        $guide = Guide::where('id', $guideId)->first();
 
         if (!$guide) {
             return response()->json(['message' => 'Guide non trouvé.'], 404);

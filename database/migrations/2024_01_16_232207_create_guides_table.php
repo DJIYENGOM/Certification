@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->text('description')->nullable();
-            $table->integer('duree_experience');
+            $table->string('duree_experience');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('zone_id')->nullable();
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Guide;
 use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +16,7 @@ class ReservationTest extends TestCase
      */
     public function testFaireReseravtion(): void
     {
-        $createUser= User::factory()->create(['email' => 'gomedjie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'gom2RTRe@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $reservation= Reservation::factory()->create();
@@ -25,7 +26,7 @@ class ReservationTest extends TestCase
 
     public function test_listerReservations_Par_Visiteur()
     {
-        $createUser= User::factory()->create(['email' => 'gomd123djie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'go57fdjie@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $response=$this->get('api/Mes_reservations');
@@ -36,7 +37,7 @@ class ReservationTest extends TestCase
     {
         // Créez un utilisateur (si ce n'est pas déjà fait)
         $createUser = User::factory()->create([
-            'email' => 'gomd1234@gmail.com',
+            'email' => 'QS@gmail.com',
             'password' => bcrypt('123456'),
         ]);
     
@@ -57,8 +58,8 @@ class ReservationTest extends TestCase
     public function testAccepterReservation(): void
     {
         // Créez un utilisateur (si ce n'est pas déjà fait)
-        $createUser = User::factory()->create([
-            'email' => 'gomd123489@gmail.com',
+        $createUser = Guide::factory()->create([
+            'email' => 'gomdxChm9@gmail.com',
             'password' => bcrypt('123456'),
         ]);
     
@@ -79,7 +80,7 @@ class ReservationTest extends TestCase
     {
         // Créez un utilisateur (si ce n'est pas déjà fait)
         $createUser = User::factory()->create([
-            'email' => 'gomd3489@gmail.com',
+            'email' => 'gomd3679@gmail.com',
             'password' => bcrypt('123456'),
         ]);
     

@@ -13,7 +13,7 @@ class ZoneTest extends TestCase
    
     public function testAjouterZone(): void
     {
-        $createUser= User::factory()->create(['email' => 'gomerdjie@gmail.com', 'password' => '123456']);
+        $createUser= User::factory()->create(['email' => 'gom234djie@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
 
         $Zone= ZoneTouristique::factory()->create();
@@ -29,7 +29,7 @@ class ZoneTest extends TestCase
   
     public function testDetailZone()
     {
-        $response=$this->get('api/detailZone/3');
+        $response=$this->get('api/detailZone/1');
         $response->assertStatus(200);
     }
 
@@ -44,7 +44,7 @@ class ZoneTest extends TestCase
             'images' => null, // Vous pouvez ajuster cela selon vos besoins
             'user_id' => 1,
         ];
-        $zones=ZoneTouristique::Find(2);
+        $zones=ZoneTouristique::Find(1);
         $response = $this->put('api/modifierZone/'.$zones->id, $zone);
         $response->assertStatus(200);
     }
@@ -53,7 +53,7 @@ class ZoneTest extends TestCase
     {
         $createUser= User::factory()->create(['email' => 'derdjie@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
-        $zones=ZoneTouristique::Find(2);
+        $zones=ZoneTouristique::Find(1);
         $response = $this->delete('api/supprimerZone/'.$zones->id);
         $response->assertStatus(200);
     }

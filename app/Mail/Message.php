@@ -19,11 +19,14 @@ class Message extends Mailable
     protected $username;
     protected $email;
     protected $contenue;
-    public function __construct($username, $contenue, $email)
+    protected $telephone;
+    public function __construct($username, $contenue, $email, $telephone)
     {
         $this->username = $username;
         $this->contenue = $contenue;
         $this->email = $email;
+        $this->telephone = $telephone;
+
     }
 
     /**
@@ -44,9 +47,10 @@ class Message extends Mailable
         $contenue = $this->contenue;
         $username = $this->username;
         $email = $this->email;
+        $telephone = $this->telephone;
     
         // Use the with method to pass data to the view
-        return (new Content())->view('message')->with(compact('username', 'contenue', 'email'));
+        return (new Content())->view('message')->with(compact('username', 'contenue', 'email', 'telephone'));
     }
     
     /**

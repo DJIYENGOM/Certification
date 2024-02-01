@@ -39,9 +39,9 @@ Route::controller(ZoneController::class)->group(function () {
 
     Route::middleware(['checkRole:admin'])->group(function () {
         Route::post('/create-guide', [AuthController::class, 'createGuide']);
-        Route::get('/listerGuide', [AuthController::class, 'listerGuides']);
+       
         Route::get('NombreGuides', [GuideController::class, 'compterNombreGuides']);
-        Route::delete('/delete-guide/{userId}', [AuthController::class, 'deleteGuide']);
+        Route::delete('/delete-guide/{guideId}', [AuthController::class, 'deleteGuide']);
 
         Route::post('ajoutZone', [ZoneController::class, 'store']);
         Route::get('NombreZones', [ZoneController::class, 'compterNombreZones']);
@@ -54,10 +54,13 @@ Route::controller(ZoneController::class)->group(function () {
         Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
 
     });
+        Route::get('/listerGuide', [GuideController::class, 'listerGuides']);
+        Route::get('/listerGuidesParZone/{zoneId}', [GuideController::class, 'listerGuidesParZone']);
 
-    Route::middleware(['checkRole:guide'])->group(function () {
+    Route::middleware(['auth:apiguide'])->group(function () {
         Route::put('/reservations/accepter/{reservationId}', [ReservationController::class, 'accepterReservation']);
         Route::put('/reservations/refuser/{reservationId}', [ReservationController::class, 'refuserReservation']);
+        Route::put('/listerReservationsParGuide', [ReservationController::class, 'refuserReservation']);
 
     });
 

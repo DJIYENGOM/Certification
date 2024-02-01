@@ -37,7 +37,7 @@ class MailRefuReservation extends Notification
         return (new MailMessage)
                     ->line('Bonjour cher(e) client(e), Votre Reservation n\'a été accepter par le guide choisi.')
                     ->line('Vous pouvez consulter la validation de votre reservation à travers ce lien ci dessous.')
-                    ->action('Statu de la Validation', url('/'));
+                    ->action('Statut de la Validation', url('/'));
     }
 
     /**

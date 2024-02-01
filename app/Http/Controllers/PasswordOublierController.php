@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class PasswordOublierController extends Controller
@@ -21,10 +22,16 @@ class PasswordOublierController extends Controller
      */
     public function submitForgetPasswordForm(Request $request)
     {
-        $request->validate([
+        $validator=Validator::make($request->all(),[
+
             'email' => 'required|email|exists:users',
         ]);
-
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $token = Str::random(64);
 
         DB::table('password_reset_tokens')->insert([

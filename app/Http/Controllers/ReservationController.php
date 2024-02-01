@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guide;
 use App\Models\User;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use App\Notifications\MailRefuReservation;
 use App\Notifications\MailAcceptReservation;
 use App\Notifications\AnnulationDeLaReservation;
 use App\Notifications\NewReservation;
+use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller
 {
@@ -18,18 +20,24 @@ class ReservationController extends Controller
     {
 
         //dd($request->all());
-        $request->validate([
+     
+        $validator=Validator::make($request->all(),[
+
             'Nom' => 'required|string',
             'email' => 'required|email',
-            'telephone' => 'required|string|regex:/^(77|76|78|70)\d{7}$/',
+            'telephone' => 'required|string|max:12',
             'nombre_de_personnes' => 'required|integer',
             'date_debut' => 'required|date|after:today',
             'date_fin' => 'required|date|after:date_debut',
             'zone' => 'required|exists:zone_touristiques,id',
-            'guide' => 'required|exists:users,id,role,guide',
+            'guide' => 'required|exists:guides,id',
  
         ]);
-
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ],422);
+        }
         $reservation = new Reservation($request->all());
         $reservation->visiteur= auth()->user()->id;
         $reservation->reservation_annuler = false; // Par défaut, la réservation n'est pas annulée
@@ -39,7 +47,7 @@ class ReservationController extends Controller
         $user = User::find($reservation->visiteur);
         $user->notify(new MailReservation());
 
-        $user = User::find($reservation->guide);
+        $user = Guide::find($reservation->guide);
         $user->notify(new NewReservation());
 
         return response()->json(['message' => 'Votre réservation a été bien prise en charge. Veuillez vérifier votre boite e-mail.']);
@@ -59,6 +67,13 @@ class ReservationController extends Controller
         return response()->json($reservations);
     }
 
+    public function listerReservationsParGuide()
+    {
+        $user = auth()->user();
+        $reservations = Reservation::where('guide', $user->id)->get();
+        return response()->json($reservations);
+    }
+
     public function annulerReservation($reservationId)
     {
         $reservation = Reservation::findOrFail($reservationId);
@@ -73,7 +88,7 @@ class ReservationController extends Controller
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->reservation_annuler = true;
             $reservation->save();
-            $user = User::find($reservation->guidedd);
+            $user = Guide::find($reservation->guide);
             $user->notify(new AnnulationDeLaReservation());
             
             return response()->json(['message' => 'Réservation annulée avec succès']);

@@ -37,7 +37,7 @@ class MailReservation extends Notification
         return (new MailMessage)
                     ->line('Bonjour cher(e) client(e), Votre Reservation a été bien prise en charge.')
                     ->line('Vous pouvez consulter la validation de votre reservation à travers ce lien ci dessous.')
-                    ->action('Statu de la Validation', url('/'));
+                    ->action('Statut de la Validation', url('/'));
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\ZoneTouristique;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +17,17 @@ class GuideFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('password'), // Vous pouvez ajuster cela en fonction de vos besoins
+            'description' => $this->faker->paragraph,
+            'duree_experience' => $this->faker->numberBetween(1, 10),
+            'image' => $this->faker->imageUrl(),
+            'zone_id' => function () {
+                return ZoneTouristique::factory()->create()->id;
+            },
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
