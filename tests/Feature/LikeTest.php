@@ -13,6 +13,7 @@ class LikeTest extends TestCase
     /**
      * A basic feature test example.
      */
+    use RefreshDatabase;
     public function testFaireLike(): void
     {
         $createUser= User::factory()->create(['email' => 'go23d23e@gmail.com', 'password' => '123456']);

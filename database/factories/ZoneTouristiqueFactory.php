@@ -24,10 +24,9 @@ class ZoneTouristiqueFactory extends Factory
             'duree' => $this->faker->randomNumber(2) . ' jours',
             'cout' => $this->faker->randomFloat(2, 10, 500),
             'images' => null, // Vous pouvez ajuster cela selon vos besoins
-            //'user_id' => function () {
-               // return User::factory()->create()->id;
-               'user_id' => 1  ,
-           // },
+            'user_id' => function () {
+               return User::factory()->create()->id;
+            },
             'created_at' => now(),
             'updated_at' => now(),
         ];

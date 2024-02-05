@@ -14,7 +14,8 @@ class ReservationTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function testFaireReseravtion(): void
+    use RefreshDatabase;
+    public function testFaireReservation(): void
     {
         $createUser= User::factory()->create(['email' => 'gom2RTRe@gmail.com', 'password' => '123456']);
         $this->actingAs($createUser,'api');
@@ -23,7 +24,7 @@ class ReservationTest extends TestCase
         $reservations=$reservation->toArray();
         $this->assertDatabaseHas('reservations',$reservations);
     }
-
+    use RefreshDatabase;
     public function test_listerReservations_Par_Visiteur()
     {
         $createUser= User::factory()->create(['email' => 'go57fdjie@gmail.com', 'password' => '123456']);
@@ -33,6 +34,7 @@ class ReservationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    use RefreshDatabase;
     public function testAnnulerReservation(): void
     {
         // Créez un utilisateur (si ce n'est pas déjà fait)

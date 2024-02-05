@@ -32,16 +32,12 @@ class ReservationFactory extends Factory
             'zone' => function () {
                 return ZoneTouristique::factory()->create()->id;
             },
-            //'visiteur' => Auth::user()->id,
-            'visiteur' => 1,
-            'guide' =>  Auth::user()->id,
+            // 'visiteur' => Auth::user()->id,
 
-            // 'guide' =>function () {
-            //     return Guide::factory()->create()->id;
-            // },
-            // 'visiteur' =>function () {
-            //     return user::factory()->create()->id;
-            // },
+            'guide'  => Auth::user()->id,
+            'visiteur' =>function () {
+                return user::factory()->create()->id;
+            },
             'created_at' => now(),
             'updated_at' => now(),
         ];
