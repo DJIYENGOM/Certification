@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
 use App\Mail\Message as MailMessage;
+use App\Mail\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
@@ -56,51 +57,19 @@ class MessageController extends Controller
         $Message = Message::all();
         return response()->json($Message);
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMessageRequest $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Message $message)
+    public function response(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMessageRequest $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Message $message)
-    {
-        //
+        try {
+            $data = $request->contenue;
+            if (Mail::to($request->email)->send(new Response($data))) {
+                return response()->json(['message' => 'reponse envoye avec success']);
+            } else {
+                return response()->json(['message' => 'reponse non envoyer']);
+            }
+        } catch (\Throwable $th) {
+            return  $th->getMessage();
+        }
     }
 }

@@ -52,6 +52,7 @@ Route::controller(ZoneController::class)->group(function () {
         Route::delete('/supprimerCommentaire/{commentaireId}', [CommentaireController::class, 'supprimerCommentaire']);
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);
         Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
+        Route::get('/response', [MessageController::class, 'response']);
 
     });
         Route::get('/listerGuide', [GuideController::class, 'listerGuides']);
