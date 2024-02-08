@@ -112,8 +112,8 @@ class ReservationController extends Controller
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->validation = 'accepter';
             $reservation->save();
-            $user = User::find($reservation->visiteur);
-            $user->notify(new MailAcceptReservation());
+           // $user = User::find($reservation->visiteur);
+            //$user->notify(new MailAcceptReservation());
             return response()->json(['message' => 'Réservation acceptée avec succès']);
         }
 

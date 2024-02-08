@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Guide;
 use App\Models\Reservation;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\ZoneTouristique;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReservationTest extends TestCase
 {
@@ -64,15 +65,19 @@ class ReservationTest extends TestCase
             'email' => 'gomdxChm9@gmail.com',
             'password' => bcrypt('123456'),
         ]);
-    
         // Authentifiez l'utilisateur
-        $this->actingAs($createUser, 'api');
-    
+        $this->actingAs($createUser, 'apiguide');
+
+        $visiteur= User::factory()->create();
+        $zone= ZoneTouristique::factory()->create();
+
         // Créez une réservation (si ce n'est pas déjà fait)
-        $reservation = Reservation::factory()->create();
-    
+        $reservation = Reservation::factory()->create(['guide'=>$createUser->id, 'visiteur'=>$visiteur->id,'zone'=>$zone->id]);
+
+       // dd($reservation);
         // Appelez la route pour annuler la réservation
         $response = $this->put('api/reservations/accepter/' . $reservation->id);
+        // dd($response);
     
         // Assurez-vous que la réponse est 200 (OK)
         $response->assertStatus(200);
