@@ -112,12 +112,12 @@ class ReservationController extends Controller
         if ($reservation->validation === 'encours' && !$reservation->reservation_annuler) {
             $reservation->validation = 'accepter';
             $reservation->save();
-           // $user = User::find($reservation->visiteur);
-            //$user->notify(new MailAcceptReservation());
+            $user = User::find($reservation->visiteur);
+            $user->notify(new MailAcceptReservation());
             return response()->json(['message' => 'Réservation acceptée avec succès']);
         }
 
-        return response()->json(['message' => 'Impossible accepter la réservation']);
+        return response()->json(['message' => 'La réservation a été déja traiter']);
     }
 
     public function refuserReservation($reservationId)
@@ -141,7 +141,7 @@ class ReservationController extends Controller
             return response()->json(['message' => 'Réservation refusée avec succès']);
         }
 
-        return response()->json(['message' => 'Impossible de refuser la réservation']);
+        return response()->json(['message' => 'La réservation a été déja traiter']);
     }
     
 }

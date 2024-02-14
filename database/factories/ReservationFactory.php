@@ -29,15 +29,15 @@ class ReservationFactory extends Factory
             'date_fin' => $this->faker->date,
             'reservation_annuler' => 0,
             'validation' => 'encours',
-            // 'zone' => function () {
-            //     return ZoneTouristique::factory()->create()->id;
-            // },
-            // 'visiteur' => Auth::user()->id,
+            'zone' => function () {
+                return ZoneTouristique::factory()->create()->id;
+            },
+            'visiteur' => Auth::user()->id,
 
-            // //'guide'  => Auth::user()->id,
-            // 'guide' =>function () {
-            //     return guide::factory()->create()->id;
-            // },
+            //'guide'  => Auth::user()->id,
+            'guide' =>function () {
+                return guide::factory()->create()->id;
+            },
             'created_at' => now(),
             'updated_at' => now(),
         ];

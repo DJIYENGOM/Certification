@@ -3,25 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\ZoneTouristique;
-use App\Notifications\NouvellePublication;
 use Illuminate\Http\Request;
+use App\Models\ZoneTouristique;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\NouvellePublication;
 
 class ZoneController extends Controller
 {
     public function index()
     {
-        $zonesTouristiques = ZoneTouristique::all();
+     
+        $zonesTouristiques = Cache::remember('zonesTouristiques',3600, function () {
+            return ZoneTouristique::all();
+        });
         return response()->json($zonesTouristiques);
     }
 
     public function compterNombreZones()
-    {
-        $nombreZone = ZoneTouristique::all()->count();
-        return response()->json(['nombre de Zones' => $nombreZone]);
-    }
+      {
+          // Récupère le nombre de zones touristiques
+          $nombreZone = ZoneTouristique::all()->count();
+          // Retourne le nombre de zones sous forme de réponse JSON
+          return response()->json(['nombre de Zones' => $nombreZone]);
+      }
 
     public function store(Request $request)
     {

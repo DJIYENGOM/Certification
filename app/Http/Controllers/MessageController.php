@@ -62,7 +62,7 @@ class MessageController extends Controller
     public function response(Request $request)
     {
         try {
-            $data = $request->contenue;
+            $data = $request->contenu;
             if (Mail::to($request->email)->send(new Response($data))) {
                 return response()->json(['message' => 'reponse envoye avec success']);
             } else {

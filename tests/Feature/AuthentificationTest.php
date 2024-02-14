@@ -18,13 +18,11 @@ class AuthentificationTest extends TestCase
         $users=$user->toArray();
         $this->assertDatabaseHas('users',$users);
     }
-
     public function testLogin(): void
     {
-        $user= User::factory()->create();
+        //$user= User::factory()->create();
         $createUser= ['email' => 'ngomdjiye@gmail.com', 'password' => 'password'];
         $insert=$this->post('api/login',$createUser);
         $insert->assertStatus(200);
-
     }
 }
