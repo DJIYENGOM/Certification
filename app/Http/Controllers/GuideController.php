@@ -29,32 +29,42 @@ class GuideController extends Controller
         return response()->json($guides);
     }
 
-    public function ChangerStatutGuideEn_NoDispo($GuideId)
+    public function ChangerStatutGuideEn_NoDispo()
     {
-        $guide = Guide::findOrFail($GuideId);
+        $guide = auth()->user();
+        
+        if($GuideId= $guide->id){
+           $guide = Guide::findOrFail($GuideId);
          
         // Vérifiez si le guide est disponible
-        if ($guide->disponibilite === 'disponible' ) {
-            $guide->disponibilite = 'non disponible';
-            $guide->save();
-            return response()->json(['message' => 'Guide ' . $guide->name.' est maintemnant non disponible']);
+            if ($guide->disponibilite === 'disponible' ) {
+                $guide->disponibilite = 'non disponible';
+                $guide->save();
+                return response()->json(['message' => 'Votre statut a été changé en non disponible avec succès']);
         }
-
-        return response()->json(['message' => 'Guide ' . $guide->name. ' est deja non disponible']);
+        return response()->json(['message' => 'Votre statut est deja non disponible']);
     }
-   
+    return response()->json(['message' => 'Vous ne pouvez pas effectuer cette action']);
 
-    public function ChangerStatutGuideEn_Dispo($GuideId)
+    }
+    public function ChangerStatutGuideEn_Dispo()
     {
-        $guide = Guide::findOrFail($GuideId);
+        $guide = auth('apiguide')->user();
+        
+    
+        $guide = Guide::findOrFail($guide->id);;
          
         // Vérifiez si le guide est non disponible
         if ($guide->disponibilite === 'non disponible' ) {
             $guide->disponibilite = 'disponible';
             $guide->save();
-            return response()->json(['message' => 'Guide ' . $guide->name.' est maintenant disponible']);
+            return response()->json(['message' => ' Votre statut est maintenant disponible']);
         }
 
-        return response()->json(['message' => 'Guide ' . $guide->name. ' est deja disponible']);
-    }
+        return response()->json(['message' => ' est deja disponible']);
+      
+
+   }
+
+
 }

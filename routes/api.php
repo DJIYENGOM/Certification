@@ -53,8 +53,7 @@ Route::controller(ZoneController::class)->group(function () {
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);
         Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
         Route::get('/response', [MessageController::class, 'response']);
-        Route::get('ChangerStatutGuideEn_Dispo/{GuideId}', [GuideController::class, 'ChangerStatutGuideEn_Dispo']);
-        Route::get('ChangerStatutGuideEn_NoDispo/{GuideId}', [GuideController::class, 'ChangerStatutGuideEn_NoDispo']);
+
         Route::get('/listerGuide', [GuideController::class, 'listerGuides']);
 
 
@@ -62,10 +61,13 @@ Route::controller(ZoneController::class)->group(function () {
         Route::get('/listeGuideDispo', [GuideController::class, 'listeGuideDispo']);
         Route::get('/listerGuidesParZone/{zoneId}', [GuideController::class, 'listerGuidesParZone']);
 
-    Route::middleware(['auth:apiguide'])->group(function () {
+    Route::middleware(['GuideMiddleware'])->group(function () {
         Route::put('/reservations/accepter/{reservationId}', [ReservationController::class, 'accepterReservation']);
         Route::put('/reservations/refuser/{reservationId}', [ReservationController::class, 'refuserReservation']);
         Route::put('/listerReservationsParGuide', [ReservationController::class, 'refuserReservation']);
+
+        Route::get('ChangerStatutGuideEn_Dispo', [GuideController::class, 'ChangerStatutGuideEn_Dispo']);
+        Route::get('ChangerStatutGuideEn_NoDispo', [GuideController::class, 'ChangerStatutGuideEn_NoDispo']);
 
     });
 

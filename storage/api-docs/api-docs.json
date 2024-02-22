@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Sen Decouvert",
-        "description": "Application didiée à la decouverte touristique au senegal",
+        "title": "Your API Title",
+        "description": "Your API Description",
         "version": "1.0.0"
     },
     "security": [
@@ -288,9 +288,9 @@
                 }
             }
         },
-        "/api/ChangerStatutGuideEn_NoDispo/{GuideId}": {
+        "/api/ChangerStatutGuideEn_Dispo": {
             "get": {
-                "summary": "changer le statut d'un guide en disponible",
+                "summary": "changer ton statut en disponible",
                 "description": "",
                 "responses": {
                     "200": {
@@ -326,10 +326,50 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "GuideId",
+                        "in": "header",
+                        "name": "User-Agent",
                         "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/ChangerStatutGuideEn_NoDispo": {
+            "get": {
+                "summary": "changer ton statut en non disponible",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
                     {
                         "in": "header",
                         "name": "User-Agent",
@@ -375,56 +415,6 @@
                     "gestion guides"
                 ],
                 "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/ChangerStatutGuideEn_Dispo/{GuideId}": {
-            "get": {
-                "summary": "changer le statut d'un guide en non disponible",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "gestion guides"
-                ],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "GuideId",
-                        "type": "string"
-                    },
                     {
                         "in": "header",
                         "name": "User-Agent",
@@ -1981,7 +1971,7 @@
                                 }
                             },
                             "example": {
-                                "email": "sey@gmail.com",
+                                "email": "bouba@gmail.com",
                                 "password": "123456"
                             }
                         }
