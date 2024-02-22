@@ -31,10 +31,9 @@ class GuideController extends Controller
 
     public function ChangerStatutGuideEn_NoDispo()
     {
-        $guide = auth()->user();
+        $guide = auth('apiguide')->user();
         
-        if($GuideId= $guide->id){
-           $guide = Guide::findOrFail($GuideId);
+        $guide = Guide::findOrFail($guide->id);;
          
         // Vérifiez si le guide est disponible
             if ($guide->disponibilite === 'disponible' ) {
@@ -43,10 +42,10 @@ class GuideController extends Controller
                 return response()->json(['message' => 'Votre statut a été changé en non disponible avec succès']);
         }
         return response()->json(['message' => 'Votre statut est deja non disponible']);
+    
     }
-    return response()->json(['message' => 'Vous ne pouvez pas effectuer cette action']);
 
-    }
+    //oubien pour disponibilité
     public function ChangerStatutGuideEn_Dispo()
     {
         $guide = auth('apiguide')->user();
@@ -61,7 +60,7 @@ class GuideController extends Controller
             return response()->json(['message' => ' Votre statut est maintenant disponible']);
         }
 
-        return response()->json(['message' => ' est deja disponible']);
+        return response()->json(['message' => 'Votre statut  est deja disponible']);
       
 
    }
