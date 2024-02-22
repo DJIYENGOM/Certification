@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->text('description')->nullable();
+            $table->text('description');
+            $table->string('telephone');
+            $table->enum('disponibilite', ['disponible', 'non disponible'])->default('disponible');
             $table->string('duree_experience');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('zone_id')->nullable();

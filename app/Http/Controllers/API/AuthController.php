@@ -119,12 +119,13 @@ class AuthController extends Controller
 
     public function createGuide(Request $request)
     {
-       $validator=Validator::make($request->all(),[
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' =>  ['required', 'string', 'min:2', 'regex:/^[a-zA-Z ]+$/'],
             'email' => 'required|string|email|max:255|unique:guides,email',
             'password' => 'required|string|min:6',
+            'telephone' => ['required', 'regex:/^7\d{8}$/'],
             'description'=> 'required|string',
-            'duree_experience' => 'required|string',
+            'duree_experience' => ['required', 'regex:/^\d{1,2}(mois|ans)$/'],
             'zone_id' => 'required|exists:zone_touristiques,id',
             'image' => 'sometimes'
         ]);
@@ -141,6 +142,8 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'disponibilite' => 'disponible',
+            'telephone' => $request->telephone,
             'description' => $request->description,
             'duree_experience' => $request->duree_experience,
             'zone_id' => $request->zone_id,

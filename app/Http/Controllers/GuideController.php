@@ -17,6 +17,11 @@ class GuideController extends Controller
         return response()->json($guides);
     }
 
+    public function listeGuideDispo()
+    {
+        $guides = Guide::where('disponibilite', 'disponible')->get();
+        return response()->json($guides);
+    }
 
     public function listerGuidesParZone($zoneId)
     {
@@ -24,17 +29,32 @@ class GuideController extends Controller
         return response()->json($guides);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function ChangerStatutGuideEn_NoDispo($GuideId)
     {
-        //
-    }
+        $guide = Guide::findOrFail($GuideId);
+         
+        // Vérifiez si le guide est disponible
+        if ($guide->disponibilite === 'disponible' ) {
+            $guide->disponibilite = 'non disponible';
+            $guide->save();
+            return response()->json(['message' => 'Guide ' . $guide->name.' est maintemnant non disponible']);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+        return response()->json(['message' => 'Guide ' . $guide->name. ' est deja non disponible']);
+    }
    
+
+    public function ChangerStatutGuideEn_Dispo($GuideId)
+    {
+        $guide = Guide::findOrFail($GuideId);
+         
+        // Vérifiez si le guide est non disponible
+        if ($guide->disponibilite === 'non disponible' ) {
+            $guide->disponibilite = 'disponible';
+            $guide->save();
+            return response()->json(['message' => 'Guide ' . $guide->name.' est maintenant disponible']);
+        }
+
+        return response()->json(['message' => 'Guide ' . $guide->name. ' est deja disponible']);
+    }
 }

@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "Sen Decouvert",
-        "description": "Description de l'API Sen Decouvert",
+        "description": "Application didiée à la decouverte touristique au senegal",
         "version": "1.0.0"
     },
     "security": [
@@ -286,6 +286,151 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/ChangerStatutGuideEn_NoDispo/{GuideId}": {
+            "get": {
+                "summary": "changer le statut d'un guide en disponible",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "GuideId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/listeGuideDispo": {
+            "get": {
+                "summary": "liste des guides disponibles",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/ChangerStatutGuideEn_Dispo/{GuideId}": {
+            "get": {
+                "summary": "changer le statut d'un guide en non disponible",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "gestion guides"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "GuideId",
+                        "type": "string"
+                    },
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
             }
         },
         "/api/listerGuide": {
@@ -663,6 +808,9 @@
                                     "zone_id": {
                                         "type": "string"
                                     },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
                                     "image": {
                                         "type": "string",
                                         "format": "binary"
@@ -670,12 +818,13 @@
                                 }
                             },
                             "example": {
-                                "name": "seydou",
-                                "email": "awa@gmail.com",
+                                "name": "bou",
+                                "email": "bouba@gmail.com",
                                 "password": "123456",
-                                "description": "competent et gentil",
-                                "duree_experience": "5 ans",
-                                "zone_id": "3",
+                                "description": "guide touristique",
+                                "duree_experience": "10ans",
+                                "zone_id": "1",
+                                "telephone": "774536738",
                                 "image": {
                                     "type": "string",
                                     "format": "binary"
@@ -1738,31 +1887,27 @@
                                     "description": {
                                         "type": "string"
                                     },
-                                    "": {
-                                        "type": "string"
-                                    },
-                                    "images": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    },
                                     "duree": {
                                         "type": "string"
                                     },
                                     "cout": {
                                         "type": "string"
+                                    },
+                                    "images": {
+                                        "type": "string",
+                                        "format": "binary"
                                     }
                                 }
                             },
                             "example": {
-                                "nom": "Sali",
-                                "description": "ville touristique ",
-                                "": "",
+                                "nom": "ile du saloum",
+                                "description": "ville touristique",
+                                "duree": "2h",
+                                "cout": "5000FCFA",
                                 "images": {
                                     "type": "string",
                                     "format": "binary"
-                                },
-                                "duree": "2h",
-                                "cout": "5000"
+                                }
                             }
                         }
                     }

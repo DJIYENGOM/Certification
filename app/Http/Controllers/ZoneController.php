@@ -32,12 +32,11 @@ class ZoneController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $validator=Validator::make($request->all(),[
-        
-            'nom' => 'required|string',
-            'description' => 'required|string',
-            'duree' => 'required|string',
-            'cout' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'nom' => ['required', 'string', 'min:2', 'regex:/^[a-zA-Z ]+$/'],
+            'description' => ['required', 'string'],
+            'duree' => ['required', 'regex:/^\d{1,2}(h|min)$/'],
+            'cout' => ['required', 'regex:/^\d+\s*FCFA$/'],
             'images.*' => 'sometimes'
         ]);
 
@@ -87,11 +86,12 @@ class ZoneController extends Controller
        // dd($request->all());
        $validator=Validator::make($request->all(),[
 
-            'nom' => 'required|string',
-            'description' => 'required|string',
-            'duree' => 'required|string',
-            'cout' => 'required|string',   
+            'nom' => ['required', 'string', 'min:2', 'regex:/^[a-zA-Z ]+$/'],
+            'description' => ['required', 'string'],
+            'duree' => ['required', 'regex:/^\d{1,2}(h|min)$/'],
+            'cout' => ['required', 'regex:/^\d+\s*FCFA$/'],
             'images.*' => 'sometimes'
+
 
         ]);
         if ($validator->fails()) {

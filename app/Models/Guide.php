@@ -21,6 +21,8 @@ class Guide extends Authenticatable implements JWTSubject
         'duree_experience',
         'image',
         'zone_id',
+        'telephone', 
+        'disponibilite'
 
     ];
 

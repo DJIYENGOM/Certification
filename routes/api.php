@@ -53,9 +53,13 @@ Route::controller(ZoneController::class)->group(function () {
         Route::get('/reservations', [ReservationController::class, 'listerReservations']);
         Route::get('/listeMessage', [MessageController::class, 'listerMessage']);
         Route::get('/response', [MessageController::class, 'response']);
+        Route::get('ChangerStatutGuideEn_Dispo/{GuideId}', [GuideController::class, 'ChangerStatutGuideEn_Dispo']);
+        Route::get('ChangerStatutGuideEn_NoDispo/{GuideId}', [GuideController::class, 'ChangerStatutGuideEn_NoDispo']);
+        Route::get('/listerGuide', [GuideController::class, 'listerGuides']);
+
 
     });
-        Route::get('/listerGuide', [GuideController::class, 'listerGuides']);
+        Route::get('/listeGuideDispo', [GuideController::class, 'listeGuideDispo']);
         Route::get('/listerGuidesParZone/{zoneId}', [GuideController::class, 'listerGuidesParZone']);
 
     Route::middleware(['auth:apiguide'])->group(function () {

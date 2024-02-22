@@ -99,7 +99,6 @@ return [
     'min' => [
         'numeric' => 'La valeur de :attribute ne peut être inférieure à :min.',
         'file' => 'La taille du fichier :attribute ne peut être inférieure à :min kilo-octets.',
-        'numeric' => 'La valeur de :attribute doit être au moins de :min.',
         'string' => 'Le texte du champ :attribute doit contenir au moins :min caractères.',
     ],
     'min_digits' => 'Le champ :attribute doit avoir au moins :min chiffres.',
@@ -163,9 +162,29 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'duree' => [
+            'regex' => 'On doit avoir la durée en minute(exple 10min) ou en heure (exple 1h)',
+
         ],
+        "nom"=> [
+            'regex' => 'Le champ nom est invalide',
+        ],
+
+        "name"=> [
+            'regex' => 'Le champ nom est invalide',
+        ],
+
+        "cout"=> [
+            'regex' => 'Le cout doit etre du chiffre suivi de FCFA',
+        ],
+
+        "telephone"=> [
+            'regex' => 'Le téléphone doit commencer par 7 suivi de 8 chiffres. Exemple : 770000000',
+        ],
+
+        "duree_experience"=> [
+            'regex' => 'Le champ duree d\'experience doit etre du chiffre 2 chiffres max suivi de mois ou Ans. Exemple : 01mois ou 10ans',
+        ]
     ],
 
     /*
