@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\ZoneTouristique;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\NouvellePublication;
 
 class ZoneController extends Controller
 {
     public function index()
-    {
+        {
      
         $zonesTouristiques = Cache::remember('zonesTouristiques',3600, function () {
             return ZoneTouristique::all();
@@ -65,6 +66,7 @@ class ZoneController extends Controller
     
         // Sauvegardez la zone touristique dans la base de données
         $zoneTouristique->save();
+        Artisan::call('optimize:clear');
     
         // Retournez une réponse JSON
         return response()->json(['message' => 'Zone touristique ajoutée avec succès']);
@@ -107,6 +109,7 @@ class ZoneController extends Controller
              }
            
         $zoneTouristique->update();
+        Artisan::call('optimize:clear');
 
         return response()->json(['message' => 'Zone touristique mise à jour avec succès']);
     }
@@ -114,6 +117,8 @@ class ZoneController extends Controller
     public function destroy(ZoneTouristique $zoneTouristique)
     {
         $zoneTouristique->delete();
+
+        Artisan::call('optimize:clear');
 
         return response()->json(['message' => 'Zone touristique supprimée avec succès']);
     }
@@ -133,7 +138,8 @@ class ZoneController extends Controller
         if ($zone->statut === 'non publier' ) {
             $zone->statut = 'publier';
             $zone->save();
-               
+            Artisan::call('optimize:clear');
+
             $users = User::where('role', 'visiteur')->get();
             foreach ($users as $user) {
                 $user->notify(new NouvellePublication());

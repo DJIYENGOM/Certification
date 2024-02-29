@@ -58,6 +58,13 @@ class ReservationController extends Controller
     public function listerReservations()
     {
         $reservations = Reservation::all();
+        foreach ($reservations as $reservation) {
+          $reservation->zonesTouristiques;
+          $reservation->guider;
+        }
+
+       // $reservations->each->guide;
+
         return response()->json($reservations);
     }
     public function listerReservationsParVisiteur()
@@ -69,8 +76,8 @@ class ReservationController extends Controller
 
     public function listerReservationsParGuide()
     {
-        $user = auth()->user();
-        $reservations = Reservation::where('guide', $user->id)->get();
+        $guide = auth('apiguide')->user();
+        $reservations = Reservation::where('guide', $guide->id)->get();
         return response()->json($reservations);
     }
 
@@ -102,9 +109,9 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($reservationId);
         
-        $user = auth()->user();
+        $guide = auth('apiguide')->user();
        // Vérifiez si l'utilisateur connecté est le guide associé à la réservation
-        if ($user->id !== $reservation->guide) {
+        if ($guide->id !== $reservation->guide) {
             return response()->json(['message' => 'Vous n\'avez pas la permission d\'annuler cette réservation.'], 403);
         }
 
@@ -124,9 +131,9 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($reservationId);
 
-        $user = auth()->user();
+        $guide = auth('apiguide')->user();
         // Vérifiez si l'utilisateur connecté est le guide associé à la réservation
-         if ($user->id !== $reservation->guide) {
+         if ($guide->id !== $reservation->guide) {
              return response()->json(['message' => 'Vous n\'avez pas la permission d\'annuler cette réservation.'], 403);
          }
          

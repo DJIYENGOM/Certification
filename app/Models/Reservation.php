@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Guide;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reservation extends Model
 {
@@ -32,6 +33,12 @@ class Reservation extends Model
 
     public function zonesTouristiques()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(ZoneTouristique::class,'zone');
+    }
+
+    
+    public function guider()
+    {
+        return $this->belongsTo(Guide::class,'guide');
     }
 }

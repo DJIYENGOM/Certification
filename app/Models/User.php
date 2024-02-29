@@ -89,6 +89,6 @@ class User extends Authenticatable implements JWTSubject
      }
      public function guides()
      {
-         return $this->hasMany(ZoneTouristique::class);
+         return $this->hasMany(Guide::class);
      }
 }

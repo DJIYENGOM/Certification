@@ -21,7 +21,9 @@ class GuideFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'), // Vous pouvez ajuster cela en fonction de vos besoins
             'description' => $this->faker->paragraph,
-            'duree_experience' => $this->faker->numberBetween(1, 10),
+            'duree_experience' => '10ans',
+            'disponibilite' => 'disponible',
+            'telephone' => '775649478',
             'image' => $this->faker->imageUrl(),
             'zone_id' => function () {
                 return ZoneTouristique::factory()->create()->id;

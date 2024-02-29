@@ -75,7 +75,7 @@ class AuthController extends Controller
        // $request->validate([
        $validator=Validator::make($request->all(),[
 
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'min:2', 'regex:/^[a-zA-Z ]+$/'],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
@@ -177,32 +177,5 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Guide supprimé avec succès']);
     }
-
-    public function updateProfile(Request $request)
-{
-    // Récupérer l'utilisateur authentifié
-    $user = auth()->user();
-   
-    // Validation des données
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255',
-        'password' => 'nullable|string|min:6',
-    ]);
-
-    // Mise à jour des informations de l'utilisateur
-    $user->name = $request->name;
-    $user->email = $request->email;
-  
-    // Vérifier et mettre à jour le mot de passe s'il est fourni
-    if ($request->has('password')) {
-        $user->password = bcrypt($request->password);
-    }
-    // Enregistrer les modifications dans la base de données
-
-    //$user->update();
-
-    return response()->json(['message' => 'Profil mis à jour avec succès', 'user' => $user]);
-}
 
 }

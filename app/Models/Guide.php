@@ -1,13 +1,14 @@
 <?php
 namespace App\Models;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Reservation;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Guide extends Authenticatable implements JWTSubject
 {
@@ -49,6 +50,11 @@ class Guide extends Authenticatable implements JWTSubject
 
     public function zones()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(ZoneTouristique::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
     }
 }

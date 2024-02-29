@@ -35,6 +35,6 @@ class ZoneTouristique extends Model
 
     public function guides()
     {
-        return $this->hasMany(Commentaire::class);
+        return $this->hasMany(Guide::class);
     }
 }

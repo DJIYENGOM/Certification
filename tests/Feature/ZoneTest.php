@@ -37,15 +37,15 @@ class ZoneTest extends TestCase
 
     public function testModifierZone(): void
     {
-        $createUser= User::factory()->create(['email' => 'dNfvFmgfde@gmail.com', 'password' => 'password','role' => 'admin']);
+        $createUser= User::factory()->create(['email' => 'dNoifvFmgfde@gmail.com', 'password' => 'password','role' => 'admin']);
         $this->actingAs($createUser,'api');
         $zone=[
-            'nom' => "Gorée",
+            'nom' => "Gore",
             'description' => "ville touristique",
             'lieu' => "Dakar",
             'statut' => 'non publier',
-            'duree' => '2 jour',
-            'cout' => ' 10000',
+            'duree' => '24h',
+            'cout' => ' 10000FCFA',
             'images' => null, // Vous pouvez ajuster cela selon vos besoins
             //'user_id' => $createUser->id,
         ];

@@ -32,11 +32,6 @@ Route::controller(ZoneController::class)->group(function () {
     Route::get('/Mes_reservations', [ReservationController::class, 'listerReservationsParVisiteur']);
     Route::put('/reservations/annuler/{reservationId}', [ReservationController::class, 'annulerReservation']);
 
-    Route::middleware(['auth:api', 'role:admin'])->group(function () {
-       // Route::post('ajoutZone', [ZoneController::class, 'store']);
-
-    });
-
     Route::middleware(['checkRole:admin'])->group(function () {
         Route::post('/create-guide', [AuthController::class, 'createGuide']);
        
@@ -64,10 +59,15 @@ Route::controller(ZoneController::class)->group(function () {
     Route::middleware(['GuideMiddleware'])->group(function () {
         Route::put('/reservations/accepter/{reservationId}', [ReservationController::class, 'accepterReservation']);
         Route::put('/reservations/refuser/{reservationId}', [ReservationController::class, 'refuserReservation']);
-        Route::put('/listerReservationsParGuide', [ReservationController::class, 'refuserReservation']);
+        Route::get('/listerReservationsParGuide', [ReservationController::class, 'listerReservationsParGuide']);
+        Route::get('/listerReservationsParGuide', [ReservationController::class, 'listerReservationsParGuide']);
+        Route::post('/ModifierSonProfil', [GuideController::class, 'updateProfile'])->name('modifier_profile');
 
         Route::get('ChangerStatutGuideEn_Dispo', [GuideController::class, 'ChangerStatutGuideEn_Dispo']);
         Route::get('ChangerStatutGuideEn_NoDispo', [GuideController::class, 'ChangerStatutGuideEn_NoDispo']);
+
+        Route::post('refresh_guide', [GuideController::class, 'refresh_guide']);
+
 
     });
 
